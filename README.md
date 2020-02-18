@@ -53,13 +53,13 @@ You might also consider to just use `minimize()` instead of `minimize_lbfgsb()` 
 ## Running the numerical experiment
 To generate the numerical example from the paper:
 1.	Run `demo_non_stationary_2D_grid_based_stresstest.m`.
-2.	To generate the plots from the paper, run `results/results_stresstest/plots_results_stresstest.m`.
+2.	To generate the plots from the paper, run `paper_results/results_stresstest/plots_results_stresstest.m`.
 
 ## Running the fetal ECG experiment
 1.	Download `r01.edf` from https://physionet.org/content/adfecgdb/1.0.0/ and store the data to the `/demo_fetal_ecg/` directory.
 2.	Download the EDF reader from https://de.mathworks.com/matlabcentral/fileexchange/31900-edfread, unzip the file and add it to your MATLAB path.
 3.	Run `fetal_ecg.m`.
-4.	To generate the plots from the paper, run `results/results_fetal_ecg/plot_results_fetal_ecg.m`.
+4.	To generate the plots from the paper, run `paper_results/results_fetal_ecg/plot_results_fetal_ecg.m`.
 
 ## Running the EIT experiment
 1.	Download eidors-v3.9.1 from http://eidors3d.sourceforge.net/download.shtml and extract all files into the `demos/demo_EIT/` directory.
@@ -68,5 +68,10 @@ To generate the numerical example from the paper:
 4.	Run `eit_load_data.m` to solve the EIT reconstruction. A mat file containing the EIT images is generated and stored into the `demos/demo_EIT/if-neonate-spontaneous` directory.
 5.	The file `eit_demo.m` solves the perfusion and ventilation separation with fixed hyperparameters.
 6.	The file `eit_demo_with_learning.m` solves the perfusion and ventilation separation and optimizes the hyperparameters. Careful: the optimization takes a long time (around 9 to 10 hours).
-7.	To generate the plots from the paper, either run `results/results_eit/v1/plot_results_eit_v1.m` or `results/results_eit/v1/plot_results_eit_v2.m`
+7.	To generate the plots from the paper, either run `paper_results/results_eit/v1/plot_results_eit_v1.m` or `paper_results/results_eit/v1/plot_results_eit_v2.m`
 
+## Running the BSP experiment
+1.  Create an account and login to http://edgar.sci.utah.edu/.
+2.  Download all files from http://edgar.sci.utah.edu/human-pacing-site/18-normal-bspm-from-noisy-and-meg-shielded-rooms-nijmegen-2004-12-09.html and copy these to `demos/demo_BSPM/`.
+3.  Run `electrode_prediction.m` to solve the spatio-temporal BSP interpolation. The results are stored into `paper_results/results_BSPM/`.
+4.  To generate the plots from the paper (and videos), run `paper_results\results_BSPM\v4`.
