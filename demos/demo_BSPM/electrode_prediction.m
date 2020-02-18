@@ -111,7 +111,6 @@ U_rad = 2*pi*(-0.75:0.015:10.5)';
 U_t = invTimeWrap( U_rad, tau);
 U_dim1 = (-pi:0.1:pi)';
 U_dim2 = (-4:0.1:0)';
-%U_dim2 = (-5:0.1:3)';
 
 xg = {{U_dim1},{U_dim2},{U_t}};
 
@@ -167,8 +166,6 @@ save(['paper_results/results_BSPM/', version ,'/regression.mat'],  'post', 'kern
     'X_all', 'Y', 'elapsed_time_learning', 'iter', 'elapsed_time_inference', 't', 'X', 'to_remove')
 
 % predict all electrodes (including the removed ones)
-% K = apx(hyp, kernel_SKI, X_all, opt_inf);
-% ymu = K.mvm(post.alpha);
 Xtest = X;
 X_test_space = repmat(Xtest, length(t), 1);
 X_t = kron(t, ones(size(Xtest,1),1));
@@ -181,7 +178,6 @@ ymu = Mx_pred1*Kg1.mvm(Mx1'*post.alpha);
 pots_test_mu = reshape(ymu, size(Xtest,1), length(t));
 
 %% plot results (over time)
-%electrode_indices = [1,10,20,30,40,50,60];
 electrode_indices = to_remove;
 num_plots = length(electrode_indices);
 
@@ -197,7 +193,7 @@ end
 %% generate images (for every 4th time step --> corresponding to 20 Hz)
 t_50Hz = t(1:4:end);
 xtest1 = -pi:0.1:pi;
-xtest2 = -5:0.1:3; %xtest2 = -4:0.1:0;
+xtest2 = -5:0.1:3;
 [Xtest1, Xtest2, Xtest3] = meshgrid(xtest1, xtest2, t_50Hz);
 Xtest = [Xtest1(:), Xtest2(:), Xtest3(:)];
 
@@ -242,11 +238,6 @@ X_t = kron(t, ones(size(nodes_2D,1),1));
 
 X_nodes_all = [X_nodes_space, X_t];
 
-% make inducing points with higher support domain
-% U_dim2_ = (-5:0.1:3)';
-% xg_2 = {{U_dim1},{U_dim2_},{U_t}};
-% kernel_SKI_2 = {@apxGrid, {@covPeriodic, @covSEisoU, covPeWarped}, xg_2};
-
 [Mx_pred1,~] = apxGrid('interp', xg_2, X_nodes_all, 3);
 [Kg1,Mx1] = feval(kernel_SKI_2{:},hyp.cov,X_all,[],3);
 
@@ -258,10 +249,9 @@ figure
 k=1;
 for i=1:num_plots
     for j=1:num_plots
-        if (k <= length(time_indices)) % time_indices are off here due to other sampling rate
+        if (k <= length(time_indices))
             subplot(num_plots, num_plots, k)
             hold on
-            %c = randn(length(nodes(:,3)),1);
             c = pots_nodes(:,time_indices(k));
             s = trisurf(faces,nodes(:,1),nodes(:,2),nodes(:,3),c, 'FaceColor', 'interp', 'EdgeColor', 'none');
             plot3(pts(:,1), pts(:,2), pts(:,3), '.r', 'MarkerSize',20)
@@ -282,9 +272,6 @@ open(outputVideo)
 
 figure;
 for i = 1:length(t)
-    
-    
-    %c = randn(length(nodes(:,3)),1);
     c = pots_nodes(:,i);
     s = trisurf(faces,nodes(:,1),nodes(:,2),nodes(:,3),c, 'FaceColor', 'interp', 'EdgeColor', 'none');
     hold on
@@ -296,7 +283,6 @@ for i = 1:length(t)
     axis equal
     frame = getframe(gcf);
     writeVideo(outputVideo,frame);
-    %close(f)
     hold off
 end
 

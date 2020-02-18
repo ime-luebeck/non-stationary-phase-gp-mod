@@ -132,7 +132,6 @@ tau_indizes = [623, 1474, 2340, 3246, 4202, 5161, 6089, 7005, 7895, 8793, 9674];
 tau = tau_indizes/1000;
 
 % create non-equidistant inducing points: U = phi^-1(U_rad)
-%U_rad = 2*pi*(-0.75:0.015:10.5)';
 U_rad = 2*pi*(3.5:0.015:10.5)';
 
 U = invTimeWrap( U_rad, tau);
@@ -186,7 +185,6 @@ U_rad = 2*pi*(-0.75:0.015:10.5)';
 U_t = invTimeWrap( U_rad, tau);
 U_dim1 = (-pi:0.1:pi)';
 U_dim2 = (-4:0.1:0)';
-%U_dim2 = (-5:0.1:3)';
 
 xg = {{U_dim1},{U_dim2},{U_t}};
 
@@ -299,7 +297,6 @@ for i=1:num_plots
         if (k <= length(time_indices)) % time_indices are off here due to other sampling rate
             subplot(num_plots, num_plots, k)
             hold on
-            %c = randn(length(nodes(:,3)),1);
             c = pots_nodes(:,time_indices(k));
             s = trisurf(faces,nodes(:,1),nodes(:,2),nodes(:,3),c, 'FaceColor', 'interp', 'EdgeColor', 'none');
             plot3(pts(:,1), pts(:,2), pts(:,3), '.r', 'MarkerSize',20)
